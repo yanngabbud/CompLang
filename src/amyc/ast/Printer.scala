@@ -199,18 +199,3 @@ trait SymbolicPrinter extends Printer {
   }
 }
 
-//object PrettyPrinter extends Printer {
-//  val treeModule = NominalTreeModule
-//  import NominalTreeModule._
-//
-//  implicit def printName(name: Name)(implicit printUniqueIds: Boolean): Document = Raw(name)
-//
-//  implicit def printQName(name: QualifiedName)(implicit printUniqueIds: Boolean): Document = {
-//    Raw(name match {
-//      case QualifiedName(Some(module), name) =>
-//        s"$module.$name"
-//      case QualifiedName(None, name) =>
-//        name
-//    })
-//  }
-//}
