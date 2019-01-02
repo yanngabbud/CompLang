@@ -1,2 +1,5 @@
 *.class
 *.log
+wasmout
+node_modules
+target
