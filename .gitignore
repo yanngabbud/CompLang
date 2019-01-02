@@ -1,5 +1,10 @@
-*.class
-*.log
-wasmout
-node_modules
-target
+# sbt compilation output
+target/
+project/target
+# Compiler output and nodejs modules
+compiler/**/*.html
+compiler/**/*.wat
+compiler/**/*.wasm
+compiler/**/*.js
+compiler/node_modules
+compiler/package-lock.json

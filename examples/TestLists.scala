@@ -4,8 +4,3 @@ object TestLists {
   Std.printInt(L.sum(l));
   Std.printString(L.toString(L.mergeSort(l)))
 }
-
-
-//object Hello {
-//  Std.printString("Hello " ++ "world!")
-//}

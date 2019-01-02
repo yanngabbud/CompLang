@@ -4,8 +4,7 @@ import utils._
 import ast._
 import parsing._
 import analyzer._
-import codegen._
-
+import prettyPrinter._
 import java.io.File
 
 object Main extends MainHelpers {
@@ -18,10 +17,7 @@ object Main extends MainHelpers {
     val pipeline =
       Lexer andThen
       Parser andThen
-      NameAnalyzer andThen
-      TypeChecker andThen
-      CodeGen andThen
-      CodePrinter
+      PrettyPrinter
 
     val files = ctx.files.map(new File(_))
 

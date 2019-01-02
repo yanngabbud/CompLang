@@ -4,7 +4,7 @@
 		module="amyc$sources"
 		revision="1.5"
 		status="integration"
-		publication="20181219174315"
+		publication="20190102123806"
 	/>
 	<configurations>
 		<conf name="compile" visibility="public" description=""/>
