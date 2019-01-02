@@ -7,52 +7,41 @@ import scala.language.implicitConversions
 
 object PrettyPrinter extends Pipeline[Program, Unit] {
   override def run(ctx: Context)(ast: Program): Unit = {
-    println(rec(ast).print)
+    println(createDocument(ast).print)
   }
 
-  def printName(name: Name): Document = Raw(name)
-
-  def printQName(name: QualifiedName): Document = {
-    Raw(name match {
-      case QualifiedName(Some(module), name) =>
-        s"$module.$name"
-      case QualifiedName(None, name) =>
-        name
-    })
-  }
-
-  def binOp(e1: Expr, op: String, e2: Expr) = rec(e1) <:> " " + op + " " <:> rec(e2)
+  def binOp(e1: Expr, op: String, e2: Expr) = createDocument(e1) <:> " " + op + " " <:> createDocument(e2)
 
   implicit def stringToDoc(s: String): Raw = Raw(s)
 
-  def rec(t: Tree): Document = t match {
+  def createDocument(t: Tree): Document = t match {
     case Program(modules) =>
-      Stacked(modules map (rec(_)), emptyLines = true)
+      Stacked(modules map (createDocument(_)), emptyLines = true)
 
     case ModuleDef(name, defs, optExpr) =>
       Stacked(
         "object " <:> name <:> " {",
-        Indented(Stacked(defs ++ optExpr.toList map (rec(_)), emptyLines = true)),
+        Indented(Stacked(defs ++ optExpr.toList map (createDocument(_)), emptyLines = true)),
         "}",
         ""
       )
 
     case AbstractClassDef(name) =>
-      "abstract class " <:> printName(name)
+      "abstract class " <:> name
 
     case CaseClassDef(name, fields, parent) =>
-      def printField(f: TypeTree) = "v: " <:> rec(f)
+      def printField(f: TypeTree) = "v: " <:> createDocument(f)
       "case class " <:> name <:> "(" <:> Lined(fields map printField, ", ") <:> ") extends " <:> parent
 
     case FunDef(name, params, retType, body) =>
       Stacked(
-        "def " <:> name <:> "(" <:> Lined(params map (rec(_)), ", ") <:> "): " <:> rec(retType) <:> " = {",
-        Indented(rec(body)),
+        "def " <:> name <:> "(" <:> Lined(params map (createDocument(_)), ", ") <:> "): " <:> createDocument(retType) <:> " = {",
+        Indented(createDocument(body)),
         "}"
       )
 
     case ParamDef(name, tpe) =>
-      name <:> ": " <:> rec(tpe)
+      name <:> ": " <:> createDocument(tpe)
 
     /* Expressions */
     case Variable(name) =>
@@ -88,55 +77,56 @@ object PrettyPrinter extends Pipeline[Program, Unit] {
     case Concat(lhs, rhs) =>
       binOp(lhs, "++", rhs)
     case Not(e) =>
-      "!(" <:> rec(e) <:> ")"
+      "!(" <:> createDocument(e) <:> ")"
     case Neg(e) =>
-      "-(" <:> rec(e) <:> ")"
+      "-(" <:> createDocument(e) <:> ")"
     case Call(name, args) =>
-      name.name <:> "(" <:> Lined(args map (rec(_)), ", ") <:> ")"
+      name.name <:> "(" <:> Lined(args map (createDocument(_)), ", ") <:> ")"
     case Sequence(lhs, rhs) =>
       val main = Stacked(
-        rec(lhs) <:> ";",
-        rec(rhs),
+        createDocument(lhs) <:> ";",
+        createDocument(rhs),
       )
       main
     case Let(df, value, body) =>
       val main = Stacked(
-        "val " <:> rec(df) <:> " =",
-        Indented(rec(value)) <:> ";",
-        rec(body) // For demonstration purposes, the scope or df is indented
+        "val " <:> createDocument(df) <:> " =",
+        Indented(createDocument(value)) <:> ";",
+        createDocument(body)
       )
       main
     case Ite(cond, thenn, elze) =>
       Stacked(
-        "if (" <:> rec(cond) <:> ") {",
-        Indented(rec(thenn)),
-        "} else {",
-        Indented(rec(elze)),
+        "if (" <:> createDocument(cond) <:> ") {",
+        Indented(createDocument(thenn)),
+        "}",
+        "else {",
+        Indented(createDocument(elze)),
         "}"
       )
     case Match(scrut, cases) =>
       Stacked(
-        rec(scrut) <:> " match {",
-        Indented(Stacked(cases map (rec(_)))),
+        createDocument(scrut) <:> " match {",
+        Indented(Stacked(cases map (createDocument(_)))),
         "}"
       )
     case Error(msg) =>
-      "error(" <:> rec(msg) <:> ")"
+      "error(" <:> createDocument(msg) <:> ")"
 
     /* cases and patterns */
     case MatchCase(pat, expr) =>
       Stacked(
-        "case " <:> rec(pat) <:> " =>",
-        Indented(rec(expr))
+        "case " <:> createDocument(pat) <:> " =>",
+        Indented(createDocument(expr))
       )
     case WildcardPattern() =>
       "_"
     case IdPattern(name) =>
       name
     case LiteralPattern(lit) =>
-      rec(lit)
+      createDocument(lit)
     case CaseClassPattern(name, args) =>
-      name.name <:> "(" <:> Lined(args map (rec(_)), ", ") <:> ")"
+      name.name <:> "(" <:> Lined(args map (createDocument(_)), ", ") <:> ")"
 
     /* Types */
     case TypeTree(tp) =>
