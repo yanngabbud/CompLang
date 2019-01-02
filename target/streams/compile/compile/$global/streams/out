@@ -1,0 +1,9 @@
+[0m[[0m[33mwarn[0m] [0m[0m/home/yann/EPFL/CompLangProc/clp-lab06/src/amyc/codegen/CodeGen.scala:147:17: match may not be exhaustive.[0m
+[0m[[0m[33mwarn[0m] [0m[0mIt would fail on the following input: (_, _)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                (pat, expr) match {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/yann/EPFL/CompLangProc/clp-lab06/src/amyc/codegen/CodeGen.scala:166:17: match may not be exhaustive.[0m
+[0m[[0m[33mwarn[0m] [0m[0mIt would fail on the following input: (_, _)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                (pat, expr) match {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m

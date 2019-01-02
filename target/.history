@@ -1,0 +1,32 @@
+run
+run example/Hello.scala
+ls
+cd
+run Hello.scala
+run examples/Hello.scala
+compile
+run examples/Hello.scala
+compile
+run examples/Hello.scala
+run library/Std.scala examples/Hello.scala
+run library/Std examples/Hello.scala
+run library/Std.scala examples/Hello.scala
+run examples/Hello.scala
+compile
+run examples/Hello.scala
+packageSubmission
+run examples/Hello.scala
+packageSubmission
+compile
+run library/Std.scala examples/Hello.scala
+run examples/Hello.scala
+run library/Std.scala examples/Hello.scala
+run library/Std.scala examples/HelloInt.scala
+run library/Std.scala examples/Printing.scala
+run library/Std.scala examples/Hanoi.scala
+run library/Std.scala examples/Factorial.scala
+run library/Std.scala examples/Arithmetic.scala
+packageSubmission
+run examples/Hello.scala
+run library/Std.scala examples/Arithmetic.scala
+compile
