@@ -2,7 +2,7 @@ package amyc
 package parsing
 
 import grammarcomp.grammar.CFGrammar.TerminalClass
-import utils.Positioned
+import utils.{Position, Positioned}
 
 sealed class Token extends Positioned
 
@@ -67,6 +67,9 @@ object Tokens {
 
   // String literals
   case class STRINGLIT(value: String) extends Token with TerminalClass
+
+  // Comment literals
+  case class COMMENTLIT(value: String, pos: Position) extends Token with TerminalClass
 
   // These three tokens are meant to represent their respective category in the parser
   val IDSENT = ID("")

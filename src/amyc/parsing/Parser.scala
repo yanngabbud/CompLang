@@ -14,7 +14,7 @@ import Tokens._
 // Absorbs tokens from the Lexer and then uses grammarcomp to generate parse trees.
 // Defines two different grammars, a naive one which does not obey operator precedence (for demonstration purposes)
 // and an LL1 grammar that implements the true syntax of Amy
-object Parser extends Pipeline[Stream[Token], Program] {
+object Parser extends Pipeline[(Stream[Token], Stream[COMMENTLIT]), (Program, Stream[COMMENTLIT])] {
 
   /* This grammar does not implement the correct syntax of Amy and is not LL1
    * It is given as an example
@@ -110,7 +110,7 @@ object Parser extends Pipeline[Stream[Token], Program] {
     'Id ::= IDSENT
   ))
 
-  def run(ctx: Context)(tokens: Stream[Token]): Program = {
+  def run(ctx: Context)(pair: (Stream[Token], Stream[COMMENTLIT])): (Program, Stream[COMMENTLIT]) = {
     // TODO: Switch to LL1 when you are ready
     val (grammar, constructor) = (amyGrammarLL1, new ASTConstructorLL1)
 //    val (grammar, constructor) = (amyGrammar, new ASTConstructor)
@@ -126,10 +126,10 @@ object Parser extends Pipeline[Stream[Token], Program] {
         warning(other)
     }
 
-    val feedback = ParseTreeUtils.parseWithTrees(grammar, tokens.toList)
+    val feedback = ParseTreeUtils.parseWithTrees(grammar, pair._1.toList)
     feedback match {
       case s: Success[Token] =>
-        constructor.constructProgram(s.parseTrees.head)
+        (constructor.constructProgram(s.parseTrees.head), pair._2)
       case err@LL1Error(_, Some(tok)) =>
         fatal(s"Parsing failed: $err", tok.obj.position)
       case err =>

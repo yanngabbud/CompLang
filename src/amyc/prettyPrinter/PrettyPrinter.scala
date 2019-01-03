@@ -1,13 +1,17 @@
 package amyc
 package prettyPrinter
 
+import amyc.parsing.Token
+import amyc.parsing.Tokens.COMMENTLIT
 import amyc.utils._
 import ast.NominalTreeModule._
+
 import scala.language.implicitConversions
 
-object PrettyPrinter extends Pipeline[Program, Unit] {
-  override def run(ctx: Context)(ast: Program): Unit = {
-    println(createDocument(ast).print)
+object PrettyPrinter extends Pipeline[(Program, Stream[COMMENTLIT]), Unit] {
+  def run(ctx: Context)(pair: (Program, Stream[COMMENTLIT])): Unit = {
+    println(createDocument(pair._1).print)
+    println(pair._2.size)
   }
 
   def binOp(e1: Expr, op: String, e2: Expr) = createDocument(e1) <:> " " + op + " " <:> createDocument(e2)

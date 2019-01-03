@@ -2,13 +2,15 @@ package amyc
 package parsing
 
 import utils._
+
 import scala.io.Source
 import java.io.File
+import parsing.Tokens.COMMENTLIT
 
 // The lexer for Amy.
 // Transforms an iterator coming from scala.io.Source to a stream of (Char, Position),
 // then uses a functional approach to consume the stream.
-object Lexer extends Pipeline[List[File], Stream[Token]] {
+object Lexer extends Pipeline[List[File], (Stream[Token], Stream[COMMENTLIT])] {
   import Tokens._
 
   /** Maps a string s to the corresponding keyword,
@@ -34,6 +36,9 @@ object Lexer extends Pipeline[List[File], Stream[Token]] {
     case "val"      => Some(VAL())
     case _          => None
   }
+
+  // Comments containers
+  private var commentStream: Stream[COMMENTLIT] = Stream.Empty
 
   private def lexFile(ctx: Context)(f: File): Stream[Token] = {
     import ctx.reporter._
@@ -71,6 +76,9 @@ object Lexer extends Pipeline[List[File], Stream[Token]] {
 
       } else if (currentChar == '/' && nextChar == '/') {
         // Single-line comment
+        val commentChar = stream.takeWhile{ case (_, p) => p.line == currentPos.line}
+        val comment = commentChar.map(x => x._1).mkString
+        commentStream = COMMENTLIT(comment, currentPos) #:: commentStream
         val next = stream.dropWhile{ case (_, p) => p.line == currentPos.line}
         if (next.isEmpty) (EOF().setPos(stream.last._2), Stream.empty)
         else nextToken(next)
@@ -231,8 +239,9 @@ object Lexer extends Pipeline[List[File], Stream[Token]] {
   }
 
   // Lexing all input files means putting the tokens from each file one after the other
-  def run(ctx: Context)(files: List[File]): Stream[Token] = {
-    files.toStream flatMap lexFile(ctx)
+  def run(ctx: Context)(files: List[File]): (Stream[Token], Stream[COMMENTLIT]) = {
+    println("lexer : " + commentStream.size)
+    (files.toStream flatMap lexFile(ctx), commentStream)
   }
 }
 
