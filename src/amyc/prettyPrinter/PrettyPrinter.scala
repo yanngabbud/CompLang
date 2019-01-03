@@ -8,10 +8,10 @@ import ast.NominalTreeModule._
 
 import scala.language.implicitConversions
 
-object PrettyPrinter extends Pipeline[(Program, Stream[COMMENTLIT]), Unit] {
-  def run(ctx: Context)(pair: (Program, Stream[COMMENTLIT])): Unit = {
+object PrettyPrinter extends Pipeline[(Program, List[COMMENTLIT]), Unit] {
+  def run(ctx: Context)(pair: (Program, List[COMMENTLIT])): Unit = {
     println(createDocument(pair._1).print)
-    println(pair._2.size)
+//    println(pair._2.size)
   }
 
   def binOp(e1: Expr, op: String, e2: Expr) = createDocument(e1) <:> " " + op + " " <:> createDocument(e2)

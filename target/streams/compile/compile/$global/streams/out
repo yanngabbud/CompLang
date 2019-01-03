@@ -1,6 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/home/yann/EPFL/CompLangProc/CompLang/src/amyc/Main.scala:20:7: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : amyc.prettyPrinter.PrettyPrinter.type[0m
-[0m[[0m[31merror[0m] [0m[0m required: amyc.utils.Pipeline[(amyc.ast.NominalTreeModule.Program, Stream[amyc.parsing.Token]),?][0m
-[0m[[0m[31merror[0m] [0m[0m      PrettyPrinter[0m
-[0m[[0m[31merror[0m] [0m[0m      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/yann/EPFL/CompLangProc/CompLang/src/amyc/parsing/Lexer.scala:265:52: Boolean does not take parameters[0m
+[0m[[0m[31merror[0m] [0m[0m      else (currentChar == '/' && nextChar == '/') {[0m
+[0m[[0m[31merror[0m] [0m[0m                                                   ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m

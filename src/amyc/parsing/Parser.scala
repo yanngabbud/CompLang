@@ -14,7 +14,7 @@ import Tokens._
 // Absorbs tokens from the Lexer and then uses grammarcomp to generate parse trees.
 // Defines two different grammars, a naive one which does not obey operator precedence (for demonstration purposes)
 // and an LL1 grammar that implements the true syntax of Amy
-object Parser extends Pipeline[(Stream[Token], Stream[COMMENTLIT]), (Program, Stream[COMMENTLIT])] {
+object Parser extends Pipeline[(Stream[Token], List[COMMENTLIT]), (Program, List[COMMENTLIT])] {
 
   /* This grammar does not implement the correct syntax of Amy and is not LL1
    * It is given as an example
@@ -110,7 +110,7 @@ object Parser extends Pipeline[(Stream[Token], Stream[COMMENTLIT]), (Program, St
     'Id ::= IDSENT
   ))
 
-  def run(ctx: Context)(pair: (Stream[Token], Stream[COMMENTLIT])): (Program, Stream[COMMENTLIT]) = {
+  def run(ctx: Context)(pair: (Stream[Token], List[COMMENTLIT])): (Program, List[COMMENTLIT]) = {
     // TODO: Switch to LL1 when you are ready
     val (grammar, constructor) = (amyGrammarLL1, new ASTConstructorLL1)
 //    val (grammar, constructor) = (amyGrammar, new ASTConstructor)

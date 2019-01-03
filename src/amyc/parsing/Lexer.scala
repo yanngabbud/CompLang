@@ -10,7 +10,7 @@ import parsing.Tokens.COMMENTLIT
 // The lexer for Amy.
 // Transforms an iterator coming from scala.io.Source to a stream of (Char, Position),
 // then uses a functional approach to consume the stream.
-object Lexer extends Pipeline[List[File], (Stream[Token], Stream[COMMENTLIT])] {
+object Lexer extends Pipeline[List[File], (Stream[Token], List[COMMENTLIT])] {
   import Tokens._
 
   /** Maps a string s to the corresponding keyword,
@@ -37,11 +37,7 @@ object Lexer extends Pipeline[List[File], (Stream[Token], Stream[COMMENTLIT])] {
     case _          => None
   }
 
-  // Comments containers
-  private var commentStream: Stream[COMMENTLIT] = Stream.Empty
-
   private def lexFile(ctx: Context)(f: File): Stream[Token] = {
-    import ctx.reporter._
 
     // Special character which represents the end of an input file
     val EndOfFile: Char = scala.Char.MaxValue
@@ -76,9 +72,6 @@ object Lexer extends Pipeline[List[File], (Stream[Token], Stream[COMMENTLIT])] {
 
       } else if (currentChar == '/' && nextChar == '/') {
         // Single-line comment
-        val commentChar = stream.takeWhile{ case (_, p) => p.line == currentPos.line}
-        val comment = commentChar.map(x => x._1).mkString
-        commentStream = COMMENTLIT(comment, currentPos) #:: commentStream
         val next = stream.dropWhile{ case (_, p) => p.line == currentPos.line}
         if (next.isEmpty) (EOF().setPos(stream.last._2), Stream.empty)
         else nextToken(next)
@@ -234,14 +227,72 @@ object Lexer extends Pipeline[List[File], (Stream[Token], Stream[COMMENTLIT])] {
         token #:: tokenStream(rest)
       }
     }
-
     tokenStream(inputStream)
   }
 
+  private def extractComment(ctx: Context)(f: File): List[COMMENTLIT] = {
+    // Special character which represents the end of an input file
+    val EndOfFile: Char = scala.Char.MaxValue
+
+    val source = Source.fromFile(f)
+
+    // Useful type alias:
+    // The input to the lexer will be a stream of characters,
+    // along with their positions in the files
+    type Input = (Char, Position)
+
+    def mkPos(i: Int) = Position.fromFile(f, i)
+
+    // The input to the lexer
+    val inputStream: Stream[Input] =
+      source.toStream.map(c => (c, mkPos(source.pos))) #::: Stream((EndOfFile, mkPos(source.pos)))
+
+    def nextToken(stream: Stream[Input], comments: List[COMMENTLIT]): List[COMMENTLIT] = {
+      require(stream.nonEmpty)
+
+      val (currentChar, currentPos) #:: rest = stream
+
+      // Use with care!
+      def nextChar = rest.head._1
+
+      if (currentChar == '/' && nextChar == '/') {
+        // Single-line comment
+        //        val commentChar = stream.takeWhile{ case (_, p) => p.line == currentPos.line}
+        //        val next = stream.dropWhile{ case (_, p) => p.line == currentPos.line}
+        val (commentChar, next) = stream.span { case (_, p) => p.line == currentPos.line }
+        val comment = commentChar.map(x => x._1).mkString
+        if (next.isEmpty) COMMENTLIT(comment, currentPos) :: comments
+        else nextToken(next, COMMENTLIT(comment, currentPos) :: comments)
+      }
+
+      else {
+        val next = stream.dropWhile{ case (c, _) => c != '/'}
+        if (next.isEmpty) comments
+        else nextToken(next, comments)
+      }
+
+//      } else if (currentChar == '/' && nextChar == '*') {
+//        // Multi-line comment
+//        val (stream1, stream2) = stream.drop(2).zip(stream.drop(3)).dropWhile{ case ((c1, p1), (c2, p2)) =>
+//          c1 != '*' || c2 != '/' || p1.line != p2.line || p1.col + 1 != p2.col
+//        }.unzip
+//        if (stream1.nonEmpty && stream2.nonEmpty)
+//          nextToken(stream2.tail)
+//        else {
+//          ctx.reporter.error("Unclosed comment", currentPos)
+//          (EOF().setPos(stream.last._2), Stream.empty)
+//        }
+
+    }
+    nextToken(inputStream, List())
+    }
+
   // Lexing all input files means putting the tokens from each file one after the other
-  def run(ctx: Context)(files: List[File]): (Stream[Token], Stream[COMMENTLIT]) = {
-    println("lexer : " + commentStream.size)
-    (files.toStream flatMap lexFile(ctx), commentStream)
+  def run(ctx: Context)(files: List[File]): (Stream[Token], List[COMMENTLIT]) = {
+    val tokens = files.toStream flatMap lexFile(ctx)
+    val comments = files.toList flatMap extractComment(ctx)
+    println("test : " + comments.head.value)
+    (tokens, comments)
   }
 }
 
