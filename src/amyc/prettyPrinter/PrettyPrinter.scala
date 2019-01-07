@@ -101,8 +101,7 @@ object PrettyPrinter extends Pipeline[(Program, List[COMMENTLIT]), Unit] {
             main
           case Let(df, value, body) =>
             val main = Stacked(
-              "val " <:> createDocument(df) <:> " =",
-              Indented(createDocument(value)) <:> ";",
+              "val " <:> createDocument(df) <:> " = " <:> createDocument(value) <:> ";",
               createDocument(body)
             )
             main
@@ -150,17 +149,18 @@ object PrettyPrinter extends Pipeline[(Program, List[COMMENTLIT]), Unit] {
             }
         }
       }
+      //todo fix last comment not printed
       if (comments.nonEmpty){
         val comment = comments.head
         if (comment.pos.line <= t.position.line) { // todo: maybe add column constraint
           comments = comments.tail
           Stacked(comment.value, createDocument(t))
         }
-        else rec(t)
+        else {
+          rec(t)
+        }
       }
-      else {
-        rec(t)
-      }
+      else rec(t)
     }
     createDocument(pair._1)
   }

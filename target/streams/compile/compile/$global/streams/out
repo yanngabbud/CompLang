@@ -1,4 +1,7 @@
-[0m[[0m[33mwarn[0m] [0m[0m/home/yann/EPFL/CompLangProc/CompLang/src/amyc/prettyPrinter/PrettyPrinter.scala:158:50: comparing values of types Char and String using `==' will always yield false[0m
-[0m[[0m[33mwarn[0m] [0m[0m          Stacked(comment.value.takeWhile(x => x == "\n"), createDocument(t))[0m
-[0m[[0m[33mwarn[0m] [0m[0m                                                 ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0m/home/yann/EPFL/CompLangProc/CompLang/src/amyc/parsing/Lexer.scala:131:7: Unmatched closing brace '}' ignored here[0m
+[0m[[0m[31merror[0m] [0m[0m      } else {[0m
+[0m[[0m[31merror[0m] [0m[0m      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/yann/EPFL/CompLangProc/CompLang/src/amyc/parsing/Lexer.scala:131:9: ';' expected but 'else' found.[0m
+[0m[[0m[31merror[0m] [0m[0m      } else {[0m
+[0m[[0m[31merror[0m] [0m[0m        ^[0m
+[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
