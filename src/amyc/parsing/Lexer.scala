@@ -291,7 +291,6 @@ object Lexer extends Pipeline[List[File], (Stream[Token], List[COMMENTLIT])] {
   def run(ctx: Context)(files: List[File]): (Stream[Token], List[COMMENTLIT]) = {
     val tokens = files.toStream flatMap lexFile(ctx)
     val comments = files.toList flatMap extractComment(ctx)
-    println("test : " + comments.head.value)
     (tokens, comments)
   }
 }
