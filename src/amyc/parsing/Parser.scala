@@ -9,12 +9,13 @@ import grammarcomp.parsing._
 import amyc.utils._
 import ast.NominalTreeModule._
 import Tokens._
+import amyc.ast.{NominalTreeModule => N}
 
 // The parser for Amy
 // Absorbs tokens from the Lexer and then uses grammarcomp to generate parse trees.
 // Defines two different grammars, a naive one which does not obey operator precedence (for demonstration purposes)
 // and an LL1 grammar that implements the true syntax of Amy
-object Parser extends Pipeline[(Stream[Token], List[COMMENTLIT]), (Program, List[COMMENTLIT])] {
+object Parser extends Pipeline[(Stream[Token], List[COMMENTLIT]), (N.Program, List[COMMENTLIT])] {
 
   /* This grammar does not implement the correct syntax of Amy and is not LL1
    * It is given as an example
@@ -114,7 +115,6 @@ object Parser extends Pipeline[(Stream[Token], List[COMMENTLIT]), (Program, List
     // TODO: Switch to LL1 when you are ready
     val (grammar, constructor) = (amyGrammarLL1, new ASTConstructorLL1)
 //    val (grammar, constructor) = (amyGrammar, new ASTConstructor)
-
     import ctx.reporter._
     implicit val gc = new GlobalContext()
     implicit val pc = new ParseContext()

@@ -22,8 +22,6 @@ object PrettyPrinter extends Pipeline[(Program, List[COMMENTLIT]), Unit] {
 
     def createDocument(t: Tree): Document = {
       def rec(t: Tree): Document = {
-        //todo remove print
-        //println("t : " + t.position.col + ":" + t.position.line + " c : " + comments.head.pos.col + ":" + comments.head.pos.line)
         t match {
           case Program(modules) =>
             Stacked(modules map (createDocument(_)), emptyLines = true)
@@ -149,10 +147,10 @@ object PrettyPrinter extends Pipeline[(Program, List[COMMENTLIT]), Unit] {
             }
         }
       }
-      //todo fix last comment not printed
-      if (comments.nonEmpty){
+
+      if (comments.nonEmpty) {
         val comment = comments.head
-        if (comment.pos.line <= t.position.line) { // todo: maybe add column constraint
+        if (comment.pos.line <= t.position.line) {
           comments = comments.tail
           Stacked(comment.value, createDocument(t))
         }
@@ -162,6 +160,7 @@ object PrettyPrinter extends Pipeline[(Program, List[COMMENTLIT]), Unit] {
       }
       else rec(t)
     }
+
     createDocument(pair._1)
   }
 }

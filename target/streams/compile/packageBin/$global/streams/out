@@ -6,6 +6,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/target/scala-2.12/classes/amyc/codegen[0m
 [0m[[0m[0mdebug[0m] [0m[0m	amyc/wasm/Instructions$Drop$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/target/scala-2.12/classes/amyc/wasm/Instructions$Drop$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	amyc/parsing/Tokens$COMMENTLIT$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/target/scala-2.12/classes/amyc/parsing/Tokens$COMMENTLIT$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	amyc/analyzer/SymbolTable.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/target/scala-2.12/classes/amyc/analyzer/SymbolTable.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	amyc/ast/TreeModule$Minus.class[0m
@@ -30,6 +32,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/target/scala-2.12/classes/amyc/parsing/Tokens$DEF$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	amyc/ast/Identifier$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/target/scala-2.12/classes/amyc/ast/Identifier$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	amyc/prettyPrinter/PrettyPrinter.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/target/scala-2.12/classes/amyc/prettyPrinter/PrettyPrinter.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	amyc/parsing/Tokens$CONCAT.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/target/scala-2.12/classes/amyc/parsing/Tokens$CONCAT.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	amyc/parsing/Tokens$EQSIGN.class[0m
@@ -160,6 +164,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/target/scala-2.12/classes/amyc/utils/NoPosition$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	amyc/ast/TreeModule$Definition.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/target/scala-2.12/classes/amyc/ast/TreeModule$Definition.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	amyc/parsing/Tokens$COMMENTLIT.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/target/scala-2.12/classes/amyc/parsing/Tokens$COMMENTLIT.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	amyc/utils/Context.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/target/scala-2.12/classes/amyc/utils/Context.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	amyc/parsing/Tokens$INT$.class[0m
@@ -436,6 +442,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/target/scala-2.12/classes/amyc/utils/Indented$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	amyc/ast/TreeModule$IdPattern.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/target/scala-2.12/classes/amyc/ast/TreeModule$IdPattern.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	amyc/prettyPrinter[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/target/scala-2.12/classes/amyc/prettyPrinter[0m
 [0m[[0m[0mdebug[0m] [0m[0m	amyc/wasm/Instructions$Br$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/target/scala-2.12/classes/amyc/wasm/Instructions$Br$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	amyc/ast/TreeModule$LiteralPattern$.class[0m
@@ -606,6 +614,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/target/scala-2.12/classes/amyc/ast/TreeModule$Call.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	amyc/wasm/Instructions$Block$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/target/scala-2.12/classes/amyc/wasm/Instructions$Block$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	amyc/prettyPrinter/PrettyPrinter$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/target/scala-2.12/classes/amyc/prettyPrinter/PrettyPrinter$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	amyc/wasm/Instructions$Load8_u$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/target/scala-2.12/classes/amyc/wasm/Instructions$Load8_u$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	amyc/Main.class[0m

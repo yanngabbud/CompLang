@@ -232,19 +232,15 @@ object Lexer extends Pipeline[List[File], (Stream[Token], List[COMMENTLIT])] {
   }
 
   private def extractComment(ctx: Context)(f: File): List[COMMENTLIT] = {
-    // Special character which represents the end of an input file
     val EndOfFile: Char = scala.Char.MaxValue
 
     val source = Source.fromFile(f)
 
-    // Useful type alias:
-    // The input to the lexer will be a stream of characters,
-    // along with their positions in the files
     type Input = (Char, Position)
 
     def mkPos(i: Int) = Position.fromFile(f, i)
 
-    // The input to the lexer
+    // The input to the commentExtractor
     val inputStream: Stream[Input] =
       source.toStream.map(c => (c, mkPos(source.pos))) #::: Stream((EndOfFile, mkPos(source.pos)))
 
@@ -253,13 +249,10 @@ object Lexer extends Pipeline[List[File], (Stream[Token], List[COMMENTLIT])] {
 
       val (currentChar, currentPos) #:: rest = stream
 
-      // Use with care!
       def nextChar = rest.head._1
 
       if (currentChar == '/' && nextChar == '/') {
         // Single-line comment
-        //        val commentChar = stream.takeWhile{ case (_, p) => p.line == currentPos.line}
-        //        val next = stream.dropWhile{ case (_, p) => p.line == currentPos.line}
         val (commentChar, next) = stream.span { case (c, _) => c != '\n' && c != EndOfFile }
         val comment = commentChar.map(x => x._1).mkString
         if (next.isEmpty) COMMENTLIT(comment, currentPos) :: comments
@@ -299,8 +292,14 @@ object Lexer extends Pipeline[List[File], (Stream[Token], List[COMMENTLIT])] {
   // Lexing all input files means putting the tokens from each file one after the other
   def run(ctx: Context)(files: List[File]): (Stream[Token], List[COMMENTLIT]) = {
     val tokens = files.toStream flatMap lexFile(ctx)
-    val comments = files.toList flatMap extractComment(ctx)
-    (tokens, comments)
+    if (ctx.prettyPrint == true) {
+      val comments = files.toList flatMap extractComment(ctx)
+      (tokens, comments)
+    }
+    else {
+      val comments = List()
+      (tokens, comments)
+    }
   }
 }
 

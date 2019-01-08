@@ -1,9 +1,12 @@
 object Hello {
-  def     fact(i: Int):
+  def fact(i: Int):
   Int = {
     if (i <  2) { 1 }
     else {
       // asdas
+      /*
+      sfsdffdgfghfgj
+       */
       val rec: Int = fact(i-1);
       i * rec
     }

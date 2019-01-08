@@ -1,6 +1,7 @@
 package amyc
 package analyzer
 
+import amyc.parsing.Tokens.COMMENTLIT
 import utils._
 import ast.{Identifier, NominalTreeModule => N, SymbolicTreeModule => S}
 
@@ -11,9 +12,10 @@ import scala.util.parsing.combinator.token.StdTokens
 // and returns a symbolic program, where all names have been resolved to unique Identifiers.
 // Rejects programs that violate the Amy naming rules.
 // Also populates and returns the symbol table.
-object NameAnalyzer extends Pipeline[N.Program, (S.Program, SymbolTable)] {
-  def run(ctx: Context)(p: N.Program): (S.Program, SymbolTable) = {
+object NameAnalyzer extends Pipeline[(N.Program, List[Object]), (S.Program, SymbolTable)] {
+  def run(ctx: Context)(input: (N.Program, List[Object])): (S.Program, SymbolTable) = {
     import ctx.reporter._
+    val p = input._1
 
     // Step 0: Initialize symbol table
     val table = new SymbolTable

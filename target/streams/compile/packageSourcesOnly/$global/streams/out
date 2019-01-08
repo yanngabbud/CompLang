@@ -16,6 +16,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/src/amyc/utils/AmycFatalError.scala[0m
 [0m[[0m[0mdebug[0m] [0m[0m	amyc/parsing/Lexer.scala[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/src/amyc/parsing/Lexer.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	amyc/prettyPrinter/PrettyPrinter.scala[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/src/amyc/prettyPrinter/PrettyPrinter.scala[0m
 [0m[[0m[0mdebug[0m] [0m[0m	amyc/wasm/Function.scala[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/yann/EPFL/CompLangProc/CompLang/src/amyc/wasm/Function.scala[0m
 [0m[[0m[0mdebug[0m] [0m[0m	amyc/codegen/CodePrinter.scala[0m

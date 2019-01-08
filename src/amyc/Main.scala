@@ -7,17 +7,31 @@ import analyzer._
 import prettyPrinter._
 import java.io.File
 
+import amyc.codegen.{CodeGen, CodePrinter}
+
 object Main extends MainHelpers {
   private def parseArgs(args: Array[String]): Context = {
-    Context(new Reporter, args.toList)
+    if (args.contains("--prettyPrint")){
+      val file = args.filter(x => x != "--prettyPrint").toList
+      Context(new Reporter, file, prettyPrint = true)
+    }
+    else Context(new Reporter, args.toList)
   }
 
   def main(args: Array[String]): Unit = {
     val ctx = parseArgs(args)
-    val pipeline =
+    val prettyPrintPipeline =
       Lexer andThen
       Parser andThen
       PrettyPrinter
+
+    val defautlPipeline =
+      Lexer andThen
+      Parser andThen
+      NameAnalyzer andThen
+      TypeChecker andThen
+      CodeGen andThen
+      CodePrinter
 
     val files = ctx.files.map(new File(_))
 
@@ -28,7 +42,9 @@ object Main extends MainHelpers {
       files.find(!_.exists()).foreach { f =>
         ctx.reporter.fatal(s"File not found: ${f.getName}")
       }
-      pipeline.run(ctx)(files)
+
+      if (ctx.prettyPrint) prettyPrintPipeline.run(ctx)(files)
+      else defautlPipeline.run(ctx)(files)
       ctx.reporter.terminateIfErrors()
     } catch {
       case AmycFatalError(_) =>
