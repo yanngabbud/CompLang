@@ -150,7 +150,7 @@ object PrettyPrinter extends Pipeline[(Program, List[COMMENTLIT]), Unit] {
 
       if (comments.nonEmpty) {
         val comment = comments.head
-        if (comment.pos.line <= t.position.line) {
+        if (comment.pos.line <= t.position.line && comment.pos.file == t.position.file) {
           comments = comments.tail
           Stacked(comment.value, createDocument(t))
         }

@@ -292,7 +292,7 @@ object Lexer extends Pipeline[List[File], (Stream[Token], List[COMMENTLIT])] {
   // Lexing all input files means putting the tokens from each file one after the other
   def run(ctx: Context)(files: List[File]): (Stream[Token], List[COMMENTLIT]) = {
     val tokens = files.toStream flatMap lexFile(ctx)
-    if (ctx.prettyPrint == true) {
+    if (ctx.prettyPrint) {
       val comments = files.toList flatMap extractComment(ctx)
       (tokens, comments)
     }
