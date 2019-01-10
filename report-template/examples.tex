@@ -1,25 +1,28 @@
-The code formatter is useful when there is a lot of nested expression and a lot on indentation. It allows the programmer to have a good structured code easily readable. Moreover it allows to have a uniform code if several people use different coding styles.
+The code formatter is useful to keep the code well structured and easily readable, mainly when there is a lot of nested expression and a lot of indentation. Moreover it allows to have a uniform code if several people working on the same project use different coding styles. 
 
-For example, let's say we have the following code : \\
+Here is an example that show how it works :
 
 \begin{lstlisting}
 /*
  * Hello object defines foo method
  */
 object Hello {
-  // foo method	
+  // foo method
   def foo(a: Boolean, x: Int, y: Int, z: Boolean): Boolean = {
-    val add: /* addition */ Int = x+y;
-    if (0<x) { true } 
+    val add: /* weird comment */ Int = x+y;
+    if (0<x) { true }
     else {
       if (a) {
-        add match {
+      
+      
+      
+        add match { // a match
           case 0 => false
-          case 1 => true
+          case 1 => true // case one
           case _ =>
-            if (z) {
+            if (z) { // an if
               true
-            } else {
+            } else { // an else
               error("wrong input")
             }
         }
@@ -28,33 +31,32 @@ object Hello {
     }
   }
 }
-\end{lstlisting}
-
-This code is really 
+\end{lstlisting} 
 
 \begin{lstlisting}
 /*
  * Hello object defines foo method
  */
-object Hello {
-  // foo method	
+object Hello { 
+  // foo method
   def foo(a: Boolean, x: Int, y: Int, z: Boolean): Boolean = {
-    /* addition */  	
-    val add: Int = x + y;
+    val add: Int = x + y; /* weird comment */
     if (0 < x) {
       true
     }
     else {
       if (a) {
-        add match {
+        add match { // a match
           case 0 =>
             false
-          case 1 =>
+          case 1 => // case one
             true
           case _ =>
+            // an if
             if (z) {
               true
             }
+            // an else
             else {
               error("wrong input")
             }
@@ -68,8 +70,12 @@ object Hello {
 }
 \end{lstlisting}
 
-EXPLAIN HOW THE COMMENT GO OUTSIDE AN EXPRESSION !
-EXPLAIN WHY THERE IS A LINE RETURN AFTER CLASS, DEF, OBJECT, ETC !
-EXPLAIN MISTAKE : COMMENTLIT DON'T USE POSITIONED CLASS ADVANTAGE
+The first block is the original code and the second is the formatted code. The first thing to note is that the structure changed. Indeed the formatter apply is own formatting rules so the very compact original code is now more aerated. The big space is removed. The \emph{else} is now below the brace. The right part of the case is also below. Etc. These rules can be simply changed by editing the \emph{PrettyPrinter} object that ensures the formatting of the code. 
+
+The second thing to note is the comments. The comments that are above code expression or at the end of a line are simply kept at the same place. But as you can see, if a comment is situated at a unusual position such as inside an expression like in the \emph{val} definition in the example, this comment is pushed outside the expression at the end of the line. The same logic applies for all the expressions. I decided to do it like that to make the implementation of the \emph{PrettyPrinter} a lot more simple, and because it is really rare to find a comment in such a position. 
+
+The last thing to note is that the comment \emph{an if} and \emph{an else} are pushed above. The \emph{if/else} comments management differs a little from the other expression. After formatting, these comments will always be pushed above the \textit{if} or the \emph{else} and they will never be at the end of the line next to them. This is due to an implementation difficulty explained later in the implementation part.
+
+
 
 

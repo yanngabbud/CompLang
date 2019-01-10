@@ -32,7 +32,7 @@ object PrettyPrinter extends Pipeline[(N.Program, List[COMMENTLIT]), Unit] {
     def insertEndOfLineComments(p: Position): String = {
       var comment = comments.head
       var result = ""
-      while (comment.pos.line == p.line) {
+      while (comment.pos.line <= p.line && comment.pos.file == p.file) {
         result = result + " " + comment.value
         comments = comments.tail
         comment = comments.head
@@ -134,15 +134,26 @@ object PrettyPrinter extends Pipeline[(N.Program, List[COMMENTLIT]), Unit] {
             )
             main
           case Ite(cond, thenn, elze) =>
-            val comments = insertEndOfLineComments(t.position)
-            Stacked(
-              "if (" <:> createDocument(cond) <:> ") {" <:> comments,
-              Indented(createDocument(thenn)),
-              "}",
-              "else {" ,
-              Indented(createDocument(elze)),
-              "}"
-            )
+            val condComments = insertEndOfLineComments(t.position).drop(1)
+            val condition = createDocument(cond)
+            val thennn = createDocument(thenn)
+            val elseComments = insertEndOfLineComments(elze.position).drop(1)
+            if (condComments.nonEmpty && elseComments.nonEmpty){
+              Stacked(condComments, "if (" <:> condition <:> ") {", Indented(thennn), "}",
+                elseComments, "else {" , Indented(createDocument(elze)), "}")
+            }
+            else if (condComments.nonEmpty){
+              Stacked(condComments, "if (" <:> condition <:> ") {", Indented(thennn), "}",
+                "else {" , Indented(createDocument(elze)), "}")
+            }
+            else if (elseComments.nonEmpty){
+              Stacked("if (" <:> condition <:> ") {", Indented(thennn), "}",
+                elseComments, "else {" , Indented(createDocument(elze)), "}")
+            }
+            else{
+              Stacked("if (" <:> condition <:> ") {", Indented(thennn), "}",
+                "else {" , Indented(createDocument(elze)), "}")
+            }
           case Match(scrut, cases) =>
             val comments = insertEndOfLineComments(t.position)
             Stacked(

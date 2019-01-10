@@ -10,15 +10,13 @@ The fourth phase is the type checking. The type checker checks that the program 
 
 The last phase is the code generation. The code generator takes the abstract syntax tree and uses it to generate \emph{WebAssembly} bytecode. Finally we can execute the result with nodejs.\\
 
-In the second part of the project, I add a code formatter to the compiler. The idea is that the compiler runs with the argument \emph{--prettyPrint} goes through a different pipeline than the default pipeline explained above. This pipeline result in the printing of the code and comments of the given input files according to formatting rules.
+In the second part of the project, I add a code formatter to the compiler. When the compiler is run with the argument \emph{--format}, it goes through a different pipeline than the default pipeline explained above. This pipeline result in the printing of the code and comments of the given input files according to formatting rules.
 
 To achieve its task, the code formatter goes through three pipeline stage.
 The first stage is the lexer. The lexer achieves the same task as before but is modified in order to also store the comments into a list. This list is then passed to the parser and used later during the printing phase. Note that if the compiler is run by default this step is skipped.
 The second stage is the parser. The parser do the same job but is slightly modified in order to accept the list passed by the lexer and to pass it further. 
 Finally the last step is the prettyprinter. The prettyprinter receives from the pipeline a \emph{NominalTreeModule} and a \emph{list of comments} and prints everything according to rules in order to have a nice formatted code.
 
-
-CHANGE NAME : PRETTYPRINT-> FORMAT
 
 
 

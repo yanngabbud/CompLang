@@ -1,21 +1,20 @@
+/*
+ * Hello object defines foo method
+ */
 object Hello {
-  abstract class test
-  case class testtest(x: Int) extends test
+  // foo method
   def foo(a: Boolean, x: Int, y: Int, z: Boolean): Boolean = {
-    val add: Int = x + y;
-    if (0 < x) {
-      true
-    } else {
+    val add: /* weird comment */ Int = x+y;
+    if (0<x) { true }
+    else {
       if (a) {
-        add match {
-          case 0 =>
-            val test: Int = x + y;
-            false
-          case 1 => true
+        add match { // a match
+          case 0 => false
+          case 1 => true // case one
           case _ =>
-            if (z) {
+            if (z) { // an if
               true
-            } else {
+            } else { // an else
               error("wrong input")
             }
         }
@@ -23,7 +22,5 @@ object Hello {
       else { false }
     }
   }
-  val toto: Boolean = foo(true, 0, 1, false);
-  foo(true, 0, 1, false)
 }
 
