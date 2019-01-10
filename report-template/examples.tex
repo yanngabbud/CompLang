@@ -1,22 +1,75 @@
-Give code examples where your extension is useful, and describe how they work
-with it. Make sure you include examples where the most intricate features of
-your extension are used, so that we have an immediate understanding of what the
-challenges are.
+The code formatter is useful when there is a lot of nested expression and a lot on indentation. It allows the programmer to have a good structured code easily readable. Moreover it allows to have a uniform code if several people use different coding styles.
 
-You can pretty-print tool code like this:
+For example, let's say we have the following code : \\
+
 \begin{lstlisting}
-object {
-  def main() : Unit = { println(new A().foo(-41)); }
-}
-
-class A {
-  def foo(i : Int) : Int = {
-    var j : Int;
-    if(i < 0) { j = 0 - i; } else { j = i; }
-    return j + 1;
+/*
+ * Hello object defines foo method
+ */
+object Hello {
+  // foo method	
+  def foo(a: Boolean, x: Int, y: Int, z: Boolean): Boolean = {
+    val add: /* addition */ Int = x+y;
+    if (0<x) { true } 
+    else {
+      if (a) {
+        add match {
+          case 0 => false
+          case 1 => true
+          case _ =>
+            if (z) {
+              true
+            } else {
+              error("wrong input")
+            }
+        }
+      }
+      else { false }
+    }
   }
 }
 \end{lstlisting}
 
-This section should convince us that you understand how your extension can be
-useful and that you thought about the corner cases.
+This code is really 
+
+\begin{lstlisting}
+/*
+ * Hello object defines foo method
+ */
+object Hello {
+  // foo method	
+  def foo(a: Boolean, x: Int, y: Int, z: Boolean): Boolean = {
+    /* addition */  	
+    val add: Int = x + y;
+    if (0 < x) {
+      true
+    }
+    else {
+      if (a) {
+        add match {
+          case 0 =>
+            false
+          case 1 =>
+            true
+          case _ =>
+            if (z) {
+              true
+            }
+            else {
+              error("wrong input")
+            }
+        }
+      }
+      else {
+        false
+      }
+    }
+  }
+}
+\end{lstlisting}
+
+EXPLAIN HOW THE COMMENT GO OUTSIDE AN EXPRESSION !
+EXPLAIN WHY THERE IS A LINE RETURN AFTER CLASS, DEF, OBJECT, ETC !
+EXPLAIN MISTAKE : COMMENTLIT DON'T USE POSITIONED CLASS ADVANTAGE
+
+

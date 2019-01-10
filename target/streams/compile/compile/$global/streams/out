@@ -1,6 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/home/yann/EPFL/CompLangProc/CompLang/src/amyc/Main.scala:27:7: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : amyc.analyzer.NameAnalyzer.type[0m
-[0m[[0m[31merror[0m] [0m[0m required: amyc.utils.Pipeline[(amyc.ast.NominalTreeModule.Program, List[amyc.parsing.Tokens.COMMENTLIT]),?][0m
-[0m[[0m[31merror[0m] [0m[0m      NameAnalyzer andThen[0m
-[0m[[0m[31merror[0m] [0m[0m      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/yann/EPFL/CompLangProc/CompLang/src/amyc/prettyPrinter/PrettyPrinterTokens.scala:17:5: illegal start of simple pattern[0m
+[0m[[0m[31merror[0m] [0m[0m    }[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m

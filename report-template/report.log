@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.10.14)  7 JAN 2019 16:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.10.14)  10 JAN 2019 11:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -158,71 +158,106 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
  (./tool-listings.tex)
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 16.
-LaTeX Font Info:    Try loading font information for OMS+cmss on input line 16.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 18.
+ (./introduction.tex
+Underfull \hbox (badness 10000) in paragraph at lines 11--12
 
-LaTeX Font Info:    No file OMScmss.fd. on input line 16.
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+)
+(./examples.tex
+Underfull \hbox (badness 10000) in paragraph at lines 3--4
+
+ []
+
+
+LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <10> not available
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 6.
+
+LaTeX Font Info:    Try loading font information for OMS+cmss on input line 6.
+LaTeX Font Info:    No file OMScmss.fd. on input line 6.
+
+LaTeX Font Warning: Font shape `OMS/cmss/m/it' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textasteriskcentered' on input line 6.
 
 
 LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbraceleft' on input line 16.
+(Font)              for symbol `textbraceleft' on input line 9.
 
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 18.
-(./introduction.tex) (./examples.tex
-LaTeX Font Info:    Try loading font information for OML+cmss on input line 15.
 
-LaTeX Font Info:    No file OMLcmss.fd. on input line 15.
+Overfull \hbox (18.5977pt too wide) in paragraph at lines 11--12
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
 
+LaTeX Font Info:    Try loading font information for OML+cmss on input line 13.
+
+LaTeX Font Info:    No file OMLcmss.fd. on input line 13.
 
 LaTeX Font Warning: Font shape `OML/cmss/m/n' undefined
 (Font)              using `OML/cmm/m/it' instead
-(Font)              for symbol `textless' on input line 15.
-
-) (./implementation.tex
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
-
-
-Package natbib Warning: Citation `TigerBook' on page 1 undefined on input line 
-7.
-
-
-Underfull \vbox (badness 3482) has occurred while \output is active []
-
-)
-(./extensions.tex)
-No file report.bbl.
-
-Package natbib Warning: There were undefined citations.
+(Font)              for symbol `textless' on input line 13.
 
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
-] (./report.aux)
+]
+Overfull \hbox (18.5977pt too wide) in paragraph at lines 41--42
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Underfull \hbox (badness 1067) in paragraph at lines 71--74
+\OT1/ptm/m/n/10.95 ! EX-PLAIN MIS-TAKE : COM-MENTLIT DON'T
+ []
+
+
+Underfull \vbox (badness 2698) has occurred while \output is active []
+
+)
+(./implementation.tex
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 5.
+
+
+Package natbib Warning: Citation `TigerBook' on page 2 undefined on input line 
+9.
+
+) (./extensions.tex)
+No file report.bbl.
+
+Package natbib Warning: There were undefined citations.
+
+[2] (./report.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 2714 strings out of 494880
- 34995 string characters out of 6179600
- 103233 words of memory out of 5000000
- 6044 multiletter control sequences out of 15000+600000
- 21155 words of font info for 41 fonts, out of 8000000 for 9000
+ 2719 strings out of 494880
+ 35067 string characters out of 6179600
+ 124233 words of memory out of 5000000
+ 6049 multiletter control sequences out of 15000+600000
+ 20800 words of font info for 39 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 31i,4n,40p,223b,1187s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 31i,5n,40p,562b,1615s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/ut
-mr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on report.pdf (1 page, 73958 bytes).
+ts/type1/public/amsfonts/cm/cmssi10.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/ur
+w/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on report.pdf (2 pages, 93625 bytes).
 PDF statistics:
- 37 PDF objects out of 1000 (max. 8388607)
- 26 compressed objects within 1 object stream
+ 44 PDF objects out of 1000 (max. 8388607)
+ 31 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

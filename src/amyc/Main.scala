@@ -11,8 +11,8 @@ import amyc.codegen.{CodeGen, CodePrinter}
 
 object Main extends MainHelpers {
   private def parseArgs(args: Array[String]): Context = {
-    if (args.contains("--prettyPrint")){
-      val file = args.filter(x => x != "--prettyPrint").toList
+    if (args.contains("--format")){
+      val file = args.filter(x => x != "--format").toList
       Context(new Reporter, file, prettyPrint = true)
     }
     else Context(new Reporter, args.toList)

@@ -231,6 +231,9 @@ object Lexer extends Pipeline[List[File], (Stream[Token], List[COMMENTLIT])] {
     tokenStream(inputStream)
   }
 
+  /*
+   * extract the commments from the file and store them into a list[COMMENTLIT]
+   */
   private def extractComment(ctx: Context)(f: File): List[COMMENTLIT] = {
     val EndOfFile: Char = scala.Char.MaxValue
 

@@ -5,21 +5,44 @@ import amyc.parsing.Token
 import amyc.parsing.Tokens.COMMENTLIT
 import amyc.utils._
 import ast.NominalTreeModule._
+import amyc.ast.{NominalTreeModule => N}
 
 import scala.language.implicitConversions
 
-object PrettyPrinter extends Pipeline[(Program, List[COMMENTLIT]), Unit] {
+object PrettyPrinter extends Pipeline[(N.Program, List[COMMENTLIT]), Unit] {
   def run(ctx: Context)(pair: (Program, List[COMMENTLIT])): Unit = {
     println(print(pair).print)
   }
 
   implicit def stringToDoc(s: String): Raw = Raw(s)
 
+  /*
+   * format and print the ast and the comments
+   */
   def print(pair: (Program, List[COMMENTLIT])): Document = {
-    var comments = pair._2.reverse
+    var comments = (COMMENTLIT("", NoPosition) :: pair._2).reverse
 
-    def binOp(e1: Expr, op: String, e2: Expr) = createDocument(e1) <:> " " + op + " " <:> createDocument(e2)
+    def binOp(e1: Expr, op: String, e2: Expr) = {
+      createDocument(e1) <:> " " + op + " " <:> createDocument(e2)
+    }
 
+    /*
+     * Helper method to print the comments at the end of the line
+     */
+    def insertEndOfLineComments(p: Position): String = {
+      var comment = comments.head
+      var result = ""
+      while (comment.pos.line == p.line) {
+        result = result + " " + comment.value
+        comments = comments.tail
+        comment = comments.head
+      }
+      result
+    }
+
+    /*
+     * Method that create the document that will be printed
+     */
     def createDocument(t: Tree): Document = {
       def rec(t: Tree): Document = {
         t match {
@@ -27,24 +50,30 @@ object PrettyPrinter extends Pipeline[(Program, List[COMMENTLIT]), Unit] {
             Stacked(modules map (createDocument(_)), emptyLines = true)
 
           case ModuleDef(name, defs, optExpr) =>
+            val comments = insertEndOfLineComments(t.position)
             Stacked(
-              "object " <:> name <:> " {",
+              "object " <:> name <:> " { " <:> comments,
               Indented(Stacked(defs ++ optExpr.toList map (createDocument(_)), emptyLines = true)),
               "}",
               ""
             )
 
           case AbstractClassDef(name) =>
-            "abstract class " <:> name
+            val comments = insertEndOfLineComments(t.position)
+            "abstract class " <:> name <:> " " <:> comments
 
           case CaseClassDef(name, fields, parent) =>
             def printField(f: TypeTree) = "v: " <:> createDocument(f)
 
-            "case class " <:> name <:> "(" <:> Lined(fields map printField, ", ") <:> ") extends " <:> parent
+            val comments = insertEndOfLineComments(t.position)
+            "case class " <:> name <:> "(" <:> Lined(fields map printField, ", ") <:> ") extends " <:>
+              parent <:> " " <:> comments
 
           case FunDef(name, params, retType, body) =>
+            val comments = insertEndOfLineComments(t.position)
             Stacked(
-              "def " <:> name <:> "(" <:> Lined(params map (createDocument(_)), ", ") <:> "): " <:> createDocument(retType) <:> " = {",
+              "def " <:> name <:> "(" <:> Lined(params map (x => createDocument(x)), ", ") <:> "): " <:>
+              createDocument(retType) <:> " = {" <:> comments,
               Indented(createDocument(body)),
               "}"
             )
@@ -54,15 +83,15 @@ object PrettyPrinter extends Pipeline[(Program, List[COMMENTLIT]), Unit] {
 
           /* Expressions */
           case Variable(name) =>
-            name
+            name <:> insertEndOfLineComments(t.position)
           case IntLiteral(value) =>
-            value.toString
+            value.toString <:> insertEndOfLineComments(t.position)
           case BooleanLiteral(value) =>
-            value.toString
+            value.toString <:> insertEndOfLineComments(t.position)
           case StringLiteral(value) =>
-            '"' + value + '"'
+            '"' + value + '"' <:> insertEndOfLineComments(t.position)
           case UnitLiteral() =>
-            "()"
+            "()" <:> insertEndOfLineComments(t.position)
           case Plus(lhs, rhs) =>
             binOp(lhs, "+", rhs)
           case Minus(lhs, rhs) =>
@@ -90,41 +119,46 @@ object PrettyPrinter extends Pipeline[(Program, List[COMMENTLIT]), Unit] {
           case Neg(e) =>
             "-(" <:> createDocument(e) <:> ")"
           case Call(name, args) =>
-            name.name <:> "(" <:> Lined(args map (createDocument(_)), ", ") <:> ")"
+            val comments = insertEndOfLineComments(t.position)
+            name.name <:> "(" <:> Lined(args map (createDocument(_)), ", ") <:> ")" <:> comments
           case Sequence(lhs, rhs) =>
             val main = Stacked(
-              createDocument(lhs) <:> ";",
-              createDocument(rhs),
+              createDocument(lhs) <:> ";", createDocument(rhs)
             )
             main
           case Let(df, value, body) =>
+            val comments = insertEndOfLineComments(t.position)
             val main = Stacked(
-              "val " <:> createDocument(df) <:> " = " <:> createDocument(value) <:> ";",
+              "val " <:> createDocument(df) <:> " = " <:> createDocument(value) <:> ";" <:> comments,
               createDocument(body)
             )
             main
           case Ite(cond, thenn, elze) =>
+            val comments = insertEndOfLineComments(t.position)
             Stacked(
-              "if (" <:> createDocument(cond) <:> ") {",
+              "if (" <:> createDocument(cond) <:> ") {" <:> comments,
               Indented(createDocument(thenn)),
               "}",
-              "else {",
+              "else {" ,
               Indented(createDocument(elze)),
               "}"
             )
           case Match(scrut, cases) =>
+            val comments = insertEndOfLineComments(t.position)
             Stacked(
-              createDocument(scrut) <:> " match {",
+              createDocument(scrut) <:> " match {" <:> comments,
               Indented(Stacked(cases map (createDocument(_)))),
               "}"
             )
           case Error(msg) =>
-            "error(" <:> createDocument(msg) <:> ")"
+            val comments = insertEndOfLineComments(t.position)
+            "error(" <:> createDocument(msg) <:> ")" <:> comments
 
           /* cases and patterns */
           case MatchCase(pat, expr) =>
+            val comments = insertEndOfLineComments(t.position)
             Stacked(
-              "case " <:> createDocument(pat) <:> " =>",
+              "case " <:> createDocument(pat) <:> " =>" <:> comments,
               Indented(createDocument(expr))
             )
           case WildcardPattern() =>
@@ -149,10 +183,20 @@ object PrettyPrinter extends Pipeline[(Program, List[COMMENTLIT]), Unit] {
       }
 
       if (comments.nonEmpty) {
-        val comment = comments.head
-        if (comment.pos.line <= t.position.line && comment.pos.file == t.position.file) {
+        var current = comments.head
+        if (current.pos.line < t.position.line && current.pos.file == t.position.file) {
+          var result: Document = current.value
+          var last = current
           comments = comments.tail
-          Stacked(comment.value, createDocument(t))
+          current = comments.head
+          while (current.pos.line  < t.position.line && current.pos.file == t.position.file) {
+            if (last.pos.line == current.pos.line) result = Stacked(result <:> " " <:> current.value)
+            else result = Stacked(result, current.value)
+            last = current
+            comments = comments.tail
+            current = comments.head
+          }
+          Stacked(result, createDocument(t))
         }
         else {
           rec(t)
