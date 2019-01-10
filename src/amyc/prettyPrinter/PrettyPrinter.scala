@@ -259,25 +259,25 @@ object PrettyPrinter extends Pipeline[(N.Program, List[COMMENTLIT]), Unit] {
         }
       }
 
+      /*
+       * Print above expression comment if any
+       */
       if (comments.nonEmpty) {
-        var current = comments.head
-        if (current.position.line < t.position.line && current.position.file == t.position.file) {
-          var result: Document = current.value
-          var last = current
-          comments = comments.tail
-          current = comments.head
-          while (current.position.line  < t.position.line && current.position.file == t.position.file) {
-            if (last.position.line == current.position.line) result = Stacked(result <:> " " <:> current.value)
-            else result = Stacked(result, current.value)
-            last = current
+        def recu(t: Tree, l: COMMENTLIT, d: Document): Document = {
+          val comment = comments.head
+          if (comment.position.line < t.position.line && comment.position.file == t.position.file) {
             comments = comments.tail
-            current = comments.head
+            if (l.position.line == comment.position.line) recu(t, comment, Stacked(d <:> " " <:> comment.value))
+            else recu(t, comment, Stacked(d, comment.value))
           }
-          Stacked(result, createDocument(t))
+          else Stacked(d, createDocument(t))
         }
-        else {
-          rec(t)
+        val comment = comments.head
+        if (comment.position.line < t.position.line && comment.position.file == t.position.file) {
+          comments = comments.tail
+          recu(t, comment, Stacked(comment.value))
         }
+        else rec(t)
       }
       else rec(t)
     }
@@ -285,3 +285,22 @@ object PrettyPrinter extends Pipeline[(N.Program, List[COMMENTLIT]), Unit] {
     createDocument(pair._1)
   }
 }
+
+//var current = comments.head
+//if (current.position.line < t.position.line && current.position.file == t.position.file) {
+//  var result: Document = current.value
+//  var last = current
+//  comments = comments.tail
+//  current = comments.head
+//  while (current.position.line  < t.position.line && current.position.file == t.position.file) {
+//  if (last.position.line == current.position.line) result = Stacked(result <:> " " <:> current.value)
+//  else result = Stacked(result, current.value)
+//  last = current
+//  comments = comments.tail
+//  current = comments.head
+//}
+//  Stacked(result, createDocument(t))
+//}
+//  else {
+//  rec(t)
+//}

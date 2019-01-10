@@ -1,6 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/home/yann/EPFL/CompLangProc/CompLang/src/amyc/prettyPrinter/PrettyPrinter.scala:71:5: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Unit[0m
-[0m[[0m[31merror[0m] [0m[0m required: amyc.utils.Document[0m
-[0m[[0m[31merror[0m] [0m[0m    }[0m
-[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/yann/EPFL/CompLangProc/CompLang/src/amyc/prettyPrinter/PrettyPrinter.scala:267:13: ')' expected but 'else' found.[0m
+[0m[[0m[31merror[0m] [0m[0m            else recu(t, comment, Stacked(d, comment.value))[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m

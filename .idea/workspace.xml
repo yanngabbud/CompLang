@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6c807901-1339-47fd-b4c9-2321a6d09fab" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/Hello.scala" beforeDir="false" afterPath="$PROJECT_DIR$/examples/Hello.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/report-template/examples.tex" beforeDir="false" afterPath="$PROJECT_DIR$/report-template/examples.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/report-template/report.log" beforeDir="false" afterPath="$PROJECT_DIR$/report-template/report.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/report-template/report.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/report-template/report.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/report-template/report.synctex.gz" beforeDir="false" afterPath="$PROJECT_DIR$/report-template/report.synctex.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/amyc/prettyPrinter/PrettyPrinter.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/amyc/prettyPrinter/PrettyPrinter.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/compile/compile/$global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/compile/$global/streams/out" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/compile/compileIncSetup/$global/streams/inc_compile_2.12.zip" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/compileIncSetup/$global/streams/inc_compile_2.12.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/compile/compileIncremental/$global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/compileIncremental/$global/streams/out" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/streams/compile/run/$global/streams/out" beforeDir="false" afterPath="$PROJECT_DIR$/target/streams/compile/run/$global/streams/out" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/project/project/target/" />
@@ -86,8 +77,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/amyc/prettyPrinter/PrettyPrinter.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="403">
-              <caret line="162" column="33" lean-forward="true" selection-start-line="162" selection-start-column="33" selection-end-line="162" selection-end-column="33" />
+            <state relative-caret-position="173">
+              <caret line="260" lean-forward="true" selection-start-line="260" selection-end-line="260" />
               <folding>
                 <element signature="e#36#61#0" expanded="true" />
               </folding>
@@ -125,8 +116,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/examples/Hello.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
+            <state relative-caret-position="48">
+              <caret line="2" column="4" lean-forward="true" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -268,7 +259,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547137893400" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547137934540" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -354,12 +345,12 @@
       <updated>1546429069684</updated>
       <workItem from="1546429070946" duration="34787000" />
       <workItem from="1546543162348" duration="11737000" />
-      <workItem from="1546938658315" duration="55477000" />
+      <workItem from="1546938658315" duration="56838000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="102001000" />
+    <option name="totallyTimeSpent" value="103362000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="240" y="-2" width="1680" height="1052" extended-state="6" />
@@ -380,8 +371,8 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Build" order="7" weight="0.28324324" />
-      <window_info active="true" anchor="bottom" id="sbt-shell-toolwindow" order="8" visible="true" weight="0.2708559" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.2990249" />
+      <window_info active="true" anchor="bottom" id="sbt-shell-toolwindow" order="8" visible="true" weight="0.43228602" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.2383532" />
       <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32972974" />
@@ -682,15 +673,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/examples/Hello.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
+        <state relative-caret-position="48">
+          <caret line="2" column="4" lean-forward="true" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/amyc/prettyPrinter/PrettyPrinter.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="403">
-          <caret line="162" column="33" lean-forward="true" selection-start-line="162" selection-start-column="33" selection-end-line="162" selection-end-column="33" />
+        <state relative-caret-position="173">
+          <caret line="260" lean-forward="true" selection-start-line="260" selection-end-line="260" />
           <folding>
             <element signature="e#36#61#0" expanded="true" />
           </folding>
