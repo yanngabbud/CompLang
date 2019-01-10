@@ -254,21 +254,20 @@ object Lexer extends Pipeline[List[File], (Stream[Token], List[COMMENTLIT])] {
 
       def nextChar = rest.head._1
 
+      // Single-line comment
       if (currentChar == '/' && nextChar == '/') {
-        // Single-line comment
         val (commentChar, next) = stream.span { case (c, _) => c != '\n' && c != EndOfFile }
         val comment = commentChar.map(x => x._1).mkString
         if (next.isEmpty) COMMENTLIT(comment).setPos(currentPos) :: comments
         else nextToken(next, COMMENTLIT(comment).setPos(currentPos) :: comments)
       }
 
+      // Multi-line comment
       else if (currentChar == '/' && nextChar == '*') {
-        nextToken(stream.drop(2), comments)
-        // Multi-line comment
         val (com1, com2) = stream.drop(2).zip(stream.drop(3)).takeWhile { case ((c1, p1), (c2, p2)) =>
           c1 != '*' || c2 != '/' || p1.line != p2.line || p1.col + 1 != p2.col
         }.unzip
-        var comment = "/*" ++ com1.map(x => x._1).mkString ++ "*/"
+        val comment = "/*" ++ com1.map(x => x._1).mkString ++ "*/"
         val (stream1, stream2) = stream.drop(2).zip(stream.drop(3)).dropWhile { case ((c1, p1), (c2, p2)) =>
           c1 != '*' || c2 != '/' || p1.line != p2.line || p1.col + 1 != p2.col
         }.unzip
