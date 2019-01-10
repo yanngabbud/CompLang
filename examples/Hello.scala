@@ -1,20 +1,22 @@
-/*
- * Hello object defines foo method
- */
-object Hello { // a match
-  // foo method
-  def foo(a: Boolean, x: Int, y: Int, z: Boolean): Boolean = { // a match
-    val add: /* weird comment */ Int = x+y;
-    if (0<x) { true }
-    else {
-      if (a) { // a match
-        add match { // a match
-          case 0 => false
-          case 1 => true // case one
-          case _ => // a match
-            if (z) { // an if
-              true
-            } else { // an else
+object Hello {
+  def foo(a: Boolean, x: Int, y: Int, z: Boolean): Boolean = { // TEST -7
+    // TEST -6
+    // TEST -5
+    val add: Int /* TEST -4 */= x+y;
+    if (0<x) {
+      true
+    } // TEST -3
+    // TEST -2
+    else { // TEST -1
+      if (a) { // TEST 0
+        add match { // TEST 2
+          // TEST 3
+          case 0 => false // TEST 4
+          case 1 => true
+          case _ =>
+            if (z) {
+              true // TEST 5
+            } else {
               error("wrong input")
             }
         }

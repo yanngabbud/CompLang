@@ -74,7 +74,10 @@ The first block is the original code and the second is the formatted code. The f
 
 The second thing to note is the comments. The comments that are above code expression or at the end of a line are simply kept at the same place. But as you can see, if a comment is situated at a unusual position such as inside an expression like in the \emph{val} definition in the example, this comment is pushed outside the expression at the end of the line. The same logic applies for all the expressions. I decided to do it like that to make the implementation of the \emph{PrettyPrinter} a lot more simple, and because it is really rare to find a comment in such a position. 
 
-The last thing to note is that the comment \emph{an if} and \emph{an else} are pushed above. The \emph{if/else} comments management differs a little from the other expression. After formatting, these comments will always be pushed above the \textit{if} or the \emph{else} and they will never be at the end of the line next to them. This is due to an implementation difficulty explained later in the implementation part.
+The last thing to note is that the comment \emph{an if} and \emph{an else} are pushed above. The \emph{if/else} comments management differs a little bit from the other expression. After formatting, these comments will always be pushed above the \textit{if} or the \emph{else} and they will never be at the end of the line next to them. This is due to an implementation difficulty explained later in the implementation part.
+
+
+PRECISE IF ELSE MANAGEMENT !
 
 
 
