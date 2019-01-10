@@ -69,7 +69,7 @@ object Tokens {
   case class STRINGLIT(value: String) extends Token with TerminalClass
 
   // Comment literals
-  case class COMMENTLIT(value: String, pos: Position) extends Token with TerminalClass
+  case class COMMENTLIT(value: String) extends Token with TerminalClass
 
   // These three tokens are meant to represent their respective category in the parser
   val IDSENT = ID("")

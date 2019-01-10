@@ -20,7 +20,7 @@ object PrettyPrinter extends Pipeline[(N.Program, List[COMMENTLIT]), Unit] {
    * format and print the ast and the comments
    */
   def print(pair: (Program, List[COMMENTLIT])): Document = {
-    var comments = (COMMENTLIT("", NoPosition) :: pair._2).reverse
+    var comments = (COMMENTLIT("").setPos(NoPosition) :: pair._2).reverse
 
     def binOp(e1: Expr, op: String, e2: Expr) = {
       createDocument(e1) <:> " " + op + " " <:> createDocument(e2)
@@ -32,7 +32,7 @@ object PrettyPrinter extends Pipeline[(N.Program, List[COMMENTLIT]), Unit] {
     def insertEndOfLineComments(p: Position): String = {
       var comment = comments.head
       var result = ""
-      while (comment.pos.line <= p.line && comment.pos.file == p.file) {
+      while (comment.position.line <= p.line && comment.position.file == p.file) {
         result = result + " " + comment.value
         comments = comments.tail
         comment = comments.head
@@ -195,13 +195,13 @@ object PrettyPrinter extends Pipeline[(N.Program, List[COMMENTLIT]), Unit] {
 
       if (comments.nonEmpty) {
         var current = comments.head
-        if (current.pos.line < t.position.line && current.pos.file == t.position.file) {
+        if (current.position.line < t.position.line && current.position.file == t.position.file) {
           var result: Document = current.value
           var last = current
           comments = comments.tail
           current = comments.head
-          while (current.pos.line  < t.position.line && current.pos.file == t.position.file) {
-            if (last.pos.line == current.pos.line) result = Stacked(result <:> " " <:> current.value)
+          while (current.position.line  < t.position.line && current.position.file == t.position.file) {
+            if (last.position.line == current.position.line) result = Stacked(result <:> " " <:> current.value)
             else result = Stacked(result, current.value)
             last = current
             comments = comments.tail

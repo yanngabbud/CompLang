@@ -258,8 +258,8 @@ object Lexer extends Pipeline[List[File], (Stream[Token], List[COMMENTLIT])] {
         // Single-line comment
         val (commentChar, next) = stream.span { case (c, _) => c != '\n' && c != EndOfFile }
         val comment = commentChar.map(x => x._1).mkString
-        if (next.isEmpty) COMMENTLIT(comment, currentPos) :: comments
-        else nextToken(next, COMMENTLIT(comment, currentPos) :: comments)
+        if (next.isEmpty) COMMENTLIT(comment).setPos(currentPos) :: comments
+        else nextToken(next, COMMENTLIT(comment).setPos(currentPos) :: comments)
       }
 
       else if (currentChar == '/' && nextChar == '*') {
@@ -273,10 +273,10 @@ object Lexer extends Pipeline[List[File], (Stream[Token], List[COMMENTLIT])] {
           c1 != '*' || c2 != '/' || p1.line != p2.line || p1.col + 1 != p2.col
         }.unzip
         if (stream1.nonEmpty && stream2.nonEmpty)
-          nextToken(stream2.tail, COMMENTLIT(comment, currentPos) :: comments)
+          nextToken(stream2.tail, COMMENTLIT(comment).setPos(currentPos) :: comments)
         else {
           ctx.reporter.error("Unclosed comment", currentPos)
-          COMMENTLIT(comment, currentPos) :: comments
+          COMMENTLIT(comment).setPos(currentPos) :: comments
         }
       }
       else if (currentChar == '/'){
