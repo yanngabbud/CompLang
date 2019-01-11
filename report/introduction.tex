@@ -1,0 +1,22 @@
+In the first part of the project we built the global architecture of the compiler. 
+
+First of all, we created the lexical analysis phase, the lexer. This phase reads the input file and converts it to a list of tokens. A token is the smallest unit in an input file which is meaningful. For example, a token is the keyword \emph{while} or a bracket. The longest matching rule is used for lexing and all useless informations such as \emph{whitespace} are dropped.
+
+The second phase is the parsing. The parser takes the sequence of tokens produced by the lexer and converts them into an \emph{Abstract Syntax Tree}. The parser consists of two stages. The first one takes the sequence of tokens and converts them into a \emph{parse three} with the help of a \emph{LL1} grammar that we defined. Then, the second stage converts the parse three into an \emph{Abstract Syntax Tree}. The second stage only keeps the useful informations. Commas, parentheses, brackets, etc are dropped.
+
+The third phase is the name analysis. The name analyzer checks that the program follow the Amy naming rules, assigns a unique \emph{identifier} to every name and finally populates the \emph{symbol table}. The symbol table is a map of identifiers to information that is useful later in the compilation.
+
+The fourth phase is the type checking. The type checker checks that the program manipulates correct kind or shape of values. For example, it checks that a boolean is not used where an int should be. If a program passes this phase without errors, it is correct from a compiling point of view.
+
+The last phase is the code generation. The code generator takes the abstract syntax tree and uses it to generate \emph{WebAssembly} bytecode. Finally we can execute the result with nodejs.\\
+
+In the second part of the project, I add a code formatter to the compiler. When the compiler is run with the argument \emph{--format}, it goes through a different pipeline than the default pipeline explained above. This pipeline result in the printing of the code and comments of the given input files according to formatting rules.
+
+To achieve its task, the code formatter goes through three pipeline stage.
+The first stage is the lexer. The lexer achieves the same task as before but is modified in order to also stores the comments into a list. This list is then passed to the parser and used later during the printing phase. Note that if the compiler is run by default this step is skipped.
+The second stage is the parser. The parser do the same job but is slightly modified in order to accept the list passed by the lexer and to pass it further. 
+Finally the last step is the prettyprinter. The prettyprinter receives from the pipeline a \emph{NominalTreeModule} and a \emph{list of comments} and prints everything according to rules in order to have a nice formatted code.
+
+
+
+

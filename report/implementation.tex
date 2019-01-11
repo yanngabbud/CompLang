@@ -1,0 +1,51 @@
+\subsection{Theoretical Background}
+As my extension do not use theoretical concept this section is empty. 
+
+
+
+\subsection{General description} 
+I will explain here the general operation of the code formatter. The trickier part of the implementation will be describe in the next section. To do this, I will follow the path taken by the formatter and describe the changes and additions if there are any.
+Note that I will not describe the elements and terms introduced in the first six labs. I will only describe how I changed them and how I used them.
+
+\subsubsection{Main}
+The \emph{Main} is slightly modified to take into account the optional argument \emph{--format}. During the parsing of the command line input, if this keyword is detected, a new context is created where the new argument \emph{format} is set to true. Then the compiler follow a new pipeline called \emph{formatPipeline}. This pipeline consists of three steps : \emph{Lexer}, \emph{Parser} and \emph{PrettyPrinter}. If the keyword is not found it follow the default pipeline i.e. it compiles the code. 
+
+\subsubsection{Lexer}
+The \emph{Lexer} includes a new method called \emph{extractComment}. As indicated by its name, this method extract the command of the input files and store them in a list of \emph{COMMENTLIT}. \emph{COMMENTLIT} is a new token specifically created to store single and multiple line comments. 
+
+The output arguments of the pipeline changed. Now a pair \emph{(Stream[Token], List[COMMENTLIT])} is passed to the parser. Before only a \emph{Stream[Token]} was passed to the parser.
+
+Finally, the \emph{run} method is slightly modified. If the \emph{format} argument of the context is set up, the \emph{lexFile} method and the \emph{extractComment} method are run and their output are passed to the parser. If not, only the \emph{lexFile} method is run and an empty list is passed as second argument of the pair. 
+
+\subsubsection{Parser}
+The only changed of the \emph{Parser} is its input and output. Now it additionally receives a list of \emph{COMMENTLIT} and passes it further to the \emph{PrettyPrinter}. There is no other changed.
+
+\subsubsection{PrettyPrinter}
+This is a new element of the compiler which takes care of formatting and printing. This part is a modified version of the \emph{Printer} that was used in the lab three to print the abstract syntax tree. It almost works the same way but also manages comments.
+
+Let's describe how it works. First, it receives from the pipeline a pair \emph{(N.Program, List[COMMENTLIT])}. Then the \emph{run} method calls the master method of the \emph{PrettyPrinter}, the \emph{print} method. This method takes care of formatting and printing. It takes as argument the pair received from the pipeline, returns a \emph{Document} and is composed of one variable : \emph{comments}, which simply stores the comments and four sub methods : \emph{binOp}, \emph{insertEndOfLineComments}, \emph{insertElzeComments} and \emph{createDocument}. The \emph{binOp} method is the same helper method as for the \emph{Printer}. The \emph{insertEndOfLineComments} method is an helper method to print the comments positioned at the end of a line. Moreover this method extract the unusual comments as explain in the \emph{Examples} section. The \emph{insertElzeComments} method is an helper method to print the comments positioned around an \emph{else}.
+
+Then the \emph{print} method calls the \emph{createDocument} method. This method takes as input an abstract syntax tree and returns a \emph{Document}. The task of this method is to iterate over the ast and the comments to create a \emph{Document} that will be printed into the console. First, it checks if the head comment of the variable \emph{comments} is positioned above the root of the tree i.e. this comment goes above the top expression of the tree. If it is the case, it adds this comment in the document and checks if the next comment in the variable \emph{comments} is also positioned above the top of the tree. If it is the case it adds it to the document and repeats the same task. If it is not the case it goes into a method named \emph{rec}. This method is the same as the \emph{rec} method of the \emph{Printer} i.e. it creates a document given an ast but is also extended to insert comments with the helper methods. 
+
+Finally, when the iteration over the ast is finished, The \emph{Document} is returned and printed into the console.
+
+
+
+\subsection{Implementation Details}
+The first thing to describe is the use of a variable to store the comments instead of passing the list of comments into argument of the methods. It was necessary to use a global variable accessible by all the method to store the comments because the \emph{createDocument} or the \emph{insertEndOfLineComments} method potentially remove the first comments of the comments list and these two methods are often called several time into the \emph{rec} method. For instance : 
+
+\begin{lstlisting}
+case Program(modules) =>
+   Stacked(modules map (createDocument(_)), 
+   emptyLines = true)
+\end{lstlisting}
+
+A call to \emph{createDocument} has no way to know if a previous call has removed some comments to the list. So to keep consistency I used a global variable so that all changes can be seen.
+
+The second thing is the used of a sentinel to mark the end of the comments list. Instead of checking if the list is empty before getting the head of the list, I had at the end of the list an empty comment that belong to no file. Because this comment belong to no file it will never be added into the document. Note that a comment is added to the document if its position is correct and it belongs to the same file as the tree. With this trick if there is no more comment to add to the document, getting the head of the list will not throw a \emph{noSuchElementException} and it avoids a lot of checking so the formatter is way faster. 
+
+The third thing to explain is why and how I extract the unusual comments and move it at the end of the line. At first I try to insert them at the correct place but that was way too complicated and absolutely not effective. The problem is that there is not enough information inside the abstract syntax tree to find the correct position of the comments. So I decided to simply push them at the end of the line. To do that I simply check if there is comments in the same line than the expression and print them at the end of the line.
+
+The fourth thing to explain is why the comments around the \emph{if} and the \emph{else} are pushed above. The reason is again a lake of information. I have no way to know if the comment \emph{else 1}, \emph{else 2}, \emph{else 3} are above, next or below the \emph{else \{ } so I decided to print all the comments that are in these position above the \emph{else \{ } and I did the same for the \emph{if \{ } so that the comment are printed similarly for the \emph{if} and the \emph{else}.
+
+To sum up, the integration of the comments was the harder part of the extension. I took a lot of time to try to find a solution but I finally realized that with my implementation I was limited. So I decided to make thing more simple and I made compromise on the comments to have something functional.

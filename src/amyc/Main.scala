@@ -13,14 +13,14 @@ object Main extends MainHelpers {
   private def parseArgs(args: Array[String]): Context = {
     if (args.contains("--format")){
       val file = args.filter(x => x != "--format").toList
-      Context(new Reporter, file, prettyPrint = true)
+      Context(new Reporter, file, format = true)
     }
     else Context(new Reporter, args.toList)
   }
 
   def main(args: Array[String]): Unit = {
     val ctx = parseArgs(args)
-    val prettyPrintPipeline =
+    val formatPipeline =
       Lexer andThen
       Parser andThen
       PrettyPrinter
@@ -43,7 +43,7 @@ object Main extends MainHelpers {
         ctx.reporter.fatal(s"File not found: ${f.getName}")
       }
 
-      if (ctx.prettyPrint) prettyPrintPipeline.run(ctx)(files)
+      if (ctx.format) formatPipeline.run(ctx)(files)
       else defautlPipeline.run(ctx)(files)
       ctx.reporter.terminateIfErrors()
     } catch {

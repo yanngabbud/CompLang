@@ -8,6 +8,6 @@ case class Context(
   printTrees: Boolean = false,
   printNames: Boolean = false,
   interpret: Boolean = false,
-  prettyPrint: Boolean = false,
+  format: Boolean = false,
   help: Boolean = false
 )

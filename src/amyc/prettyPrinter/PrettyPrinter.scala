@@ -1,7 +1,6 @@
 package amyc
 package prettyPrinter
 
-import amyc.parsing.Token
 import amyc.parsing.Tokens.COMMENTLIT
 import amyc.utils._
 import ast.NominalTreeModule._
@@ -47,16 +46,6 @@ object PrettyPrinter extends Pipeline[(N.Program, List[COMMENTLIT]), Unit] {
       }
     }
 
-//      var comment = comments.head
-//      var result = ""
-//      while (comment.position.line == p.line && comment.position.file == p.file) {
-//        result = result + " " + comment.value
-//        comments = comments.tail
-//        comment = comments.head
-//      }
-//      result
-
-
     /*
      * Helper method to print the comments next to "else {"
      */
@@ -77,7 +66,6 @@ object PrettyPrinter extends Pipeline[(N.Program, List[COMMENTLIT]), Unit] {
         Stacked()
       }
     }
-
 
     /*
      * Method that create the document that will be printed
@@ -285,22 +273,3 @@ object PrettyPrinter extends Pipeline[(N.Program, List[COMMENTLIT]), Unit] {
     createDocument(pair._1)
   }
 }
-
-//var current = comments.head
-//if (current.position.line < t.position.line && current.position.file == t.position.file) {
-//  var result: Document = current.value
-//  var last = current
-//  comments = comments.tail
-//  current = comments.head
-//  while (current.position.line  < t.position.line && current.position.file == t.position.file) {
-//  if (last.position.line == current.position.line) result = Stacked(result <:> " " <:> current.value)
-//  else result = Stacked(result, current.value)
-//  last = current
-//  comments = comments.tail
-//  current = comments.head
-//}
-//  Stacked(result, createDocument(t))
-//}
-//  else {
-//  rec(t)
-//}

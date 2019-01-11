@@ -1,0 +1,88 @@
+The code formatter is useful to keep the code well structured and easily readable, mainly when there is a lot of nested expression and a lot of indentation. Moreover it allows to have a uniform code if several people working on the same project use different coding styles. 
+
+Here is an example that show how it works :
+
+\begin{lstlisting}
+/*
+ * Hello object defines foo method
+ */
+object Hello {
+  // foo method
+  def foo(a: Boolean, x: Int, y: Int, z: Boolean): Boolean = {
+    val add: /* weird comment */ Int = x+y;
+    if (0<x) { true }
+    else {
+      if (a) {
+
+
+
+        add match { // a match
+          case 0 => false
+          case 1 => true // case one
+          case _ =>
+            // if 1
+            if (z) { // if 2
+              // if 3
+              true
+            } 
+            // else 1
+            else { // else 2
+              // else 3
+              error("wrong input")
+            }
+        }
+      } else { false }
+    }
+  }
+}
+\end{lstlisting} 
+
+\begin{lstlisting}
+/*
+ * Hello object defines foo method
+ */
+object Hello { 
+  // foo method
+  def foo(a: Boolean, x: Int, y: Int, z: Boolean): Boolean = { 
+    val add: Int = x + y; /* weird comment */
+    if (0 < x) {
+      true
+    }
+    else {
+      if (a) {
+        add match { // a match
+          case 0 => 
+            false
+          case 1 => // case one
+            true
+          case _ => 
+            // if 1
+            // if 2
+            if (z) {
+              // if 3
+              true
+            }
+            // else 1
+            // else 2
+            // else 3
+            else {
+              error("wrong input") 
+            }
+        }
+      }
+      else {
+        false
+      }
+    }
+  }
+}
+\end{lstlisting}
+
+The first block is the original code and the second is the formatted code. The first thing to note is that the structure changed. Indeed the formatter applies its own formatting rules so the very compact original code is now more aerated. The big space belove the \emph{if(a)} is removed. The \emph{else} is now below the brace. The right part of the case is also below. Etc. These rules can be simply changed by editing the \emph{PrettyPrinter} object that ensures the formatting of the code. 
+
+The second thing to note is the comments. The comments that are above code expression or at the end of a line are simply kept at the same place. But as you can see, if a comment is situated at a unusual position such as inside an expression like in the \emph{val} definition in the example, this comment is pushed outside the expression at the end of the line. The same logic applies for all other expressions if a comment is written inside. I decided to do it like that to make the implementation of the \emph{PrettyPrinter} a lot more simple, and because it is really rare to find a comment in such a position. 
+
+The last thing to note is that the management of comments around an \emph{if} or an \emph{else} differs a little bit from the other expression. The above comments i.e. \emph{if 1} and \emph{else 1} stay at the same place like as for other expressions. On the other hand, the comments \emph{if 2} and \emph{else 2} do not stay at the end of the line but are pushed above. Finally \emph{else 3} is not at the correct position but \emph{if 3} is. I will explain in the implementation part why are these comments formatted like this.
+
+
+
